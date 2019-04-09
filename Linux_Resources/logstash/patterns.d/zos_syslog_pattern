@@ -1,0 +1,16 @@
+RECTYPE [NWMOX][CRI ]
+DESTCODE [0-9a-fA-F]{7,7}
+SYSNAME .{8,8}
+DATETIME [0-9]{5,5} [0-9]{2,2}:[0-9]{2,2}:[0-9]{2,2}.[0-9]{2,2}
+IDENT .{8,8}
+MSGFLAG .{8,8}
+ALERTFLAG .{1,1}
+
+MSGID_MVS [A-Z]{3,7}[0-9]{3,5}[ADEISTW]?
+MSGID_JES2 \$HASP[0-9]{3,4}
+MSGID (%{MSGID_MVS}|%{MSGID_JES2})
+
+PATTERN01 %{RECTYPE:rectype}%{DESTCODE:destcode} %{SYSNAME:sysname} %{DATETIME:date_time} %{IDENT:ident} %{MSGFLAG:msgflag} %{ALERTFLAG:alertflag}%{GREEDYDATA:message}
+PATTERN02 [+]?(%{MSGID:msg_id} %{GREEDYDATA:msg_text}|%{GREEDYDATA:msg_text})
+
+

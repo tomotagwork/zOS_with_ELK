@@ -1,0 +1,14 @@
+# This file is where you define your pipelines. You can define multiple.
+# For more information on multiple pipelines, see the documentation:
+#   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
+
+
+- pipeline.id: da_sys_zosmf
+  path.config: "/etc/logstash/conf.d/da_sys_zosmf.conf"
+- pipeline.id: da_job_zosmf
+  path.config: "/etc/logstash/conf.d/da_job_zosmf.conf"
+
+- pipeline.id: syslog_zosmf
+  path.config: "/etc/logstash/conf.d/syslog_zosmf.conf"
+
+

@@ -1,0 +1,42 @@
+/* REXX */
+parse arg mydatetime
+
+rc=isfcalls('ON')
+
+/***************************/
+/* Access the DA display   */
+/***************************/
+Address SDSF "ISFEXEC DA"
+lrc=rc
+if lrc<>0 then
+  exit 20
+
+HEADER = "TIME,JNAME,STEPN,PROCS,JTYPE,JNUM,JOBID,OWNERID,JCLASS"
+HEADER = HEADER",POS,DP,REAL,PAGING,EXCPRT,CPUPR,ASID,ASIDX,EXCP"
+HEADER = HEADER",CPU,SWAPR,STATUS,SYSNAME,WORKLOAD,SRVCLASS"
+HEADER = HEADER",PERIOD,RESGROUP,SERVER,QUIESCE,ECPU,ECPUPR,CPUCRIT"
+HEADER = HEADER",STORCRIT,RPTCLASS,MEMLIMIT,TRANACT,TRANRES,SPIN,SECLABEL"
+HEADER = HEADER",GCPTIME,ZAAPTIME,ZAAPCPTM,GCPUSE,ZAAPUSE"
+HEADER = HEADER",PROMOTED,ZAAPNTIM,ZIIPTIME,ZIIPCPTM,ZIIPNTIM,ZIIPUSE"
+HEADER = HEADER",IOPRIOGRP,JOBCORR"
+/* say HEADER */
+
+/***********************************/
+/* Loop for all target jobs        */
+/***********************************/
+do ix=1 to JNAME.0
+  LINE = MYDATETIME","JNAME.ix","STEPN.ix","PROCS.ix","JTYPE.ix","JNUM.ix","JOBID.ix","OWNERID.ix","JCLASS.ix
+  LINE = LINE","POS.ix","DP.ix","REAL.ix","PAGING.ix","EXCPRT.ix","CPUPR.ix","ASID.ix","ASIDX.ix","EXCP.ix
+  LINE = LINE","CPU.ix","SWAPR.ix","STATUS.ix","SYSNAME.ix","WORKLOAD.ix","SRVCLASS.ix
+  LINE = LINE","PERIOD.ix","RESGROUP.ix","SERVER.ix","QUIESCE.ix","ECPU.ix","ECPUPR.ix","CPUCRIT.ix
+  LINE = LINE","STORCRIT.ix","RPTCLASS.ix","MEMLIMIT.ix","TRANACT.ix","TRANRES.ix","SPIN.ix","SECLABEL.ix
+  LINE = LINE","GCPTIME.ix","ZAAPTIME.ix","ZAAPCPTM.ix","GCPUSE.ix","ZAAPUSE.ix
+  LINE = LINE","PROMOTED.ix","ZAAPNTIM.ix","ZIIPTIME.ix","ZIIPCPTM.ix","ZIIPNTIM.ix","ZIIPUSE.ix
+  LINE = LINE","IOPRIOGRP.ix","JOBCORR.ix
+  say LINE
+end
+
+rc=isfcalls('OFF')
+exit
+
+
